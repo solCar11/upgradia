@@ -94,7 +94,7 @@ export default function MobileMenu({ isOpen, onClose }: Props) {
 
         {/* Panel */}
         <div
-          className={`menu-panel relative flex flex-col`}
+          className={`menu-panel relative flex flex-col ${isOpen ? 'open' : ''}`}
           style={{
             width: '300px',
             maxWidth: '88vw',
