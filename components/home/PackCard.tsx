@@ -13,8 +13,10 @@ export default function PackCard({ pack }: { pack: Pack }) {
       className="rounded-2xl"
       style={{
         background: '#111',
-        border: `1px solid ${pack.glowColor}55`,
-        boxShadow: `0 0 40px ${pack.glowColor}22, 0 0 0 1px ${pack.glowColor}11`,
+        border: `1px solid ${pack.glowColor}66`,
+        boxShadow: pack.id === 'pack-platino'
+          ? `0 0 25px ${pack.glowColor}55, 0 0 50px ${pack.glowColor}30, 0 0 80px ${pack.glowColor}15`
+          : `0 0 20px ${pack.glowColor}33, 0 0 40px ${pack.glowColor}18`,
         padding: '1.25rem',
         display: 'flex',
         flexDirection: 'column',
@@ -53,7 +55,7 @@ export default function PackCard({ pack }: { pack: Pack }) {
         <span>¿Qué Incluye?</span>
         <span
           style={{
-            color: '#F5A623',
+            color: pack.glowColor,
             fontSize: '12px',
             display: 'inline-block',
             transform: open ? 'rotate(180deg)' : 'rotate(0deg)',

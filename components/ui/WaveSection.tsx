@@ -3,7 +3,7 @@ type Props = { height?: number }
 export default function WaveSection({ height = 50 }: Props) {
   const mobileHeight = Math.round(height * 0.6)
   return (
-    <div style={{ position: 'relative', width: '100%', overflow: 'hidden', lineHeight: 0, transform: 'scaleX(-1) scaleY(-1)' }}>
+    <div style={{ position: 'relative', width: '100%', overflow: 'hidden', lineHeight: 0, transform: 'scaleX(-1) scaleY(-1)', filter: 'drop-shadow(0 -4px 10px rgba(95,250,59,0.55)) drop-shadow(0 -8px 20px rgba(95,250,59,0.25))' }}>
       <style>{`
         @keyframes move-forever {
           0%   { transform: translate3d(-90px, 0, 0); }

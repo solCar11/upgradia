@@ -19,7 +19,7 @@ export default function CategorySection({ title, products, id }: Props) {
           }
         }
       `}</style>
-      <h2 className="text-center font-black" style={{ fontSize: '2.75rem', color: '#5FFA3B', fontFamily: "'Inter', sans-serif", letterSpacing: '-0.01em', lineHeight: 1, marginBottom: '1.5rem' }}>{title}</h2>
+      <h2 className="text-center font-black" style={{ fontSize: '2.75rem', color: '#5FFA3B', fontFamily: "'Inter', sans-serif", letterSpacing: '-0.01em', lineHeight: 1, marginBottom: '2.25rem' }}>{title}</h2>
       <div className="products-grid">
         {products.map(product => (
           <ProductCard key={product.id} product={product} />
