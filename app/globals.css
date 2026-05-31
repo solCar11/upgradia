@@ -131,3 +131,14 @@ body {
   to { transform: translateX(0); }
 }
 .animate-slide-in-left { animation: slideInLeft 0.3s ease forwards; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.scroll-reveal {
+  opacity: 0;
+}
+.scroll-reveal.visible {
+  animation: fadeInUp 0.5s ease forwards;
+}
