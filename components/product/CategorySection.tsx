@@ -10,12 +10,12 @@ export default function CategorySection({ title, products, id }: Props) {
         #${id} .products-grid {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
-          gap: 0.75rem;
+          gap: 1.25rem;
         }
         @media (min-width: 768px) {
           #${id} .products-grid {
             grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
+            gap: 1.5rem;
           }
         }
       `}</style>
