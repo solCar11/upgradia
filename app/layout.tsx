@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'Upgradia — Productos Digitales para Revendedores',
   description: 'Tu tienda de productos digitales: proveedores verificados, bots, formación y herramientas para empezar a ganar en la reventa.',
   icons: { icon: '/favicon.ico' },
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
