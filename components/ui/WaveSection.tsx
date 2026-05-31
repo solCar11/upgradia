@@ -1,17 +1,22 @@
 type Props = { height?: number }
 
 export default function WaveSection({ height = 50 }: Props) {
-  const overflow = 24 // extra px so the glow doesn't clip at the edge
   return (
-    // Outer wrapper: overflow visible, shifted up by overflow amount so wave appears in same position
-    <div style={{ position: 'relative', width: '100%', lineHeight: 0, marginBottom: `-${overflow}px` }}>
+    <div style={{ position: 'relative', width: '100%', lineHeight: 0 }}>
+      {/* Glow strip — sits on top of the wave, radiates upward only */}
       <div style={{
-        width: '100%',
-        overflow: 'hidden',
-        lineHeight: 0,
-        transform: 'scaleX(-1) scaleY(-1)',
-        paddingTop: `${overflow}px`, // extra space at the bottom (post-flip = top) for glow to breathe
-      }}>
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: '1px',
+        zIndex: 2,
+        boxShadow: '0 -8px 24px 6px rgba(95,250,59,0.55), 0 -18px 48px 10px rgba(95,250,59,0.25)',
+        pointerEvents: 'none',
+      }} />
+
+      {/* Wave */}
+      <div style={{ width: '100%', overflow: 'hidden', lineHeight: 0, transform: 'scaleX(-1) scaleY(-1)' }}>
         <style>{`
           @keyframes move-forever {
             0%   { transform: translate3d(-90px, 0, 0); }
@@ -31,12 +36,7 @@ export default function WaveSection({ height = 50 }: Props) {
           viewBox="0 24 150 28"
           preserveAspectRatio="none"
           shapeRendering="auto"
-          style={{
-            display: 'block',
-            width: '100%',
-            height: `${height}px`,
-            filter: 'drop-shadow(0px -6px 10px rgba(95,250,59,0.6)) drop-shadow(0px -12px 24px rgba(95,250,59,0.3))',
-          }}
+          style={{ display: 'block', width: '100%', height: `${height}px` }}
         >
           <defs>
             <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />

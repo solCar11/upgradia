@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from 'react'
 import Link from 'next/link'
 import WaveSection from '@/components/ui/WaveSection'
+import ReviewCard from '@/components/ui/ReviewCard'
 import StarRating from '@/components/ui/StarRating'
 import { reviews } from '@/lib/data'
 import type { Review } from '@/lib/data'
@@ -43,29 +44,14 @@ function ReviewStrip({ items, direction }: { items: Review[]; direction: 1 | -1 
       onPointerLeave={() => setPaused(false)}
       style={{ overflowX: 'hidden', cursor: 'grab', userSelect: 'none', width: '100%' }}
     >
-      <div style={{ display: 'flex', gap: '0.75rem', width: 'max-content', paddingBottom: '0.25rem' }}>
+      <div style={{ display: 'flex', gap: '0.75rem', width: 'max-content', paddingBottom: '0.25rem', paddingLeft: '1rem', paddingRight: '1rem' }}>
         {doubled.map((review, idx) => (
           <Link
             key={idx}
             href={`/producto/${review.productImage.split('/').pop()?.replace('.png', '') ?? ''}`}
-            style={{ textDecoration: 'none', flexShrink: 0 }}
-            onClick={e => e.stopPropagation()}
+            style={{ textDecoration: 'none', flexShrink: 0, width: '240px', display: 'block' }}
           >
-            <div style={{
-              background: '#fff',
-              color: '#000',
-              borderRadius: '1rem',
-              padding: '0.875rem',
-              width: '240px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.4rem',
-            }}>
-              <StarRating rating={review.rating} size="sm" />
-              <p style={{ fontWeight: 700, fontSize: '0.8rem', color: '#000' }}>{review.name}</p>
-              <p style={{ fontSize: '0.75rem', lineHeight: 1.5, color: '#333', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{review.text}</p>
-              <p style={{ fontSize: '0.7rem', fontWeight: 600, color: '#5FFA3B', marginTop: '0.25rem' }}>{review.productName}</p>
-            </div>
+            <ReviewCard review={review} />
           </Link>
         ))}
       </div>
@@ -74,10 +60,13 @@ function ReviewStrip({ items, direction }: { items: Review[]; direction: 1 | -1 
 }
 
 export default function ReviewsSection({ productReviews }: Props) {
-  const displayReviews = productReviews ?? reviews
-  const row1 = displayReviews.slice(0, Math.ceil(displayReviews.length / 2))
-  const row2 = displayReviews.slice(Math.ceil(displayReviews.length / 2))
-  const row3 = [...displayReviews].reverse().slice(0, Math.ceil(displayReviews.length / 2))
+  const all = productReviews ?? reviews
+  const third = Math.ceil(all.length / 3)
+  const row1 = all.slice(0, third)
+  const row2 = all.slice(third, third * 2)
+  const row3 = all.slice(third * 2)
+  // Pad short rows with duplicates so each strip loops properly
+  const pad = (arr: Review[]) => arr.length < 3 ? [...arr, ...arr, ...arr] : arr
 
   return (
     <section id="valoraciones">
@@ -91,13 +80,12 @@ export default function ReviewsSection({ productReviews }: Props) {
           </div>
           <p style={{ fontSize: '0.875rem', fontWeight: 500, marginTop: '0.25rem', color: '#888' }}>2.983 reseñas</p>
         </div>
-        <div style={{ borderTop: '1px solid #222', marginBottom: '1.5rem', margin: '0 1rem 1.5rem' }} />
+        <div style={{ borderTop: '1px solid #222', margin: '0 1rem 1.5rem' }} />
 
-        {/* 3 auto-scrolling rows, alternating directions */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', overflow: 'hidden' }}>
-          <ReviewStrip items={row1} direction={1} />
-          <ReviewStrip items={row2.length > 0 ? row2 : row1} direction={-1} />
-          <ReviewStrip items={row3} direction={1} />
+          <ReviewStrip items={pad(row1)} direction={1} />
+          <ReviewStrip items={pad(row2.length > 0 ? row2 : all)} direction={-1} />
+          <ReviewStrip items={pad(row3.length > 0 ? row3 : [...all].reverse())} direction={1} />
         </div>
       </div>
     </section>

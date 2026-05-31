@@ -5,21 +5,14 @@ import type { Review } from '@/lib/data'
 export default function ReviewCard({ review }: { review: Review }) {
   return (
     <div
-      className="rounded-2xl"
-      style={{ background: '#fff', color: '#000', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
+      style={{ background: '#fff', color: '#000', borderRadius: '1rem', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
     >
       <StarRating rating={review.rating} size="sm" />
       <div>
         <p style={{ fontWeight: 700, fontSize: '0.875rem', color: '#000' }}>{review.name}</p>
         {review.verified && (
           <p style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.75rem', marginTop: '0.25rem', fontWeight: 500, color: '#222' }}>
-            <span
-              style={{
-                width: 13, height: 13, background: '#222', color: '#fff', fontSize: '8px', lineHeight: 1,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                borderRadius: '9999px', flexShrink: 0,
-              }}
-            >✓</span>
+            <span style={{ width: 13, height: 13, background: '#222', color: '#fff', fontSize: '8px', lineHeight: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '9999px', flexShrink: 0 }}>✓</span>
             Compra verificada
           </p>
         )}
