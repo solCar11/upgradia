@@ -7,6 +7,10 @@ export default function ScrollToTop() {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
+    // Force scroll to top on page load/refresh
+    if (history.scrollRestoration) history.scrollRestoration = 'manual'
+    window.scrollTo(0, 0)
+
     const onScroll = () => setVisible(window.scrollY > 400)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)

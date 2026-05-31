@@ -3,15 +3,16 @@ type Props = { height?: number }
 export default function WaveSection({ height = 50 }: Props) {
   return (
     <div style={{ position: 'relative', width: '100%', lineHeight: 0 }}>
-      {/* Glow strip — sits on top of the wave, radiates upward only */}
+      {/* Glow strip — intense close to the edge, fades upward */}
       <div style={{
         position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
-        height: '1px',
+        height: '2px',
         zIndex: 2,
-        boxShadow: '0 -8px 24px 6px rgba(95,250,59,0.55), 0 -18px 48px 10px rgba(95,250,59,0.25)',
+        background: 'rgba(95,250,59,0.7)',
+        boxShadow: '0 -2px 6px 2px rgba(95,250,59,0.85), 0 -8px 20px 4px rgba(95,250,59,0.45), 0 -22px 50px 8px rgba(95,250,59,0.15)',
         pointerEvents: 'none',
       }} />
 

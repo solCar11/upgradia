@@ -2,11 +2,19 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import type { Pack } from '@/lib/data'
 
 export default function PackCard({ pack }: { pack: Pack }) {
   const [open, setOpen] = useState(false)
+  const contentRef = useRef<HTMLUListElement>(null)
+  const [height, setHeight] = useState(0)
+
+  useEffect(() => {
+    if (contentRef.current) {
+      setHeight(open ? contentRef.current.scrollHeight : 0)
+    }
+  }, [open])
 
   return (
     <div
@@ -37,35 +45,14 @@ export default function PackCard({ pack }: { pack: Pack }) {
       {/* Dropdown */}
       <button
         onClick={() => setOpen(!open)}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          width: '100%',
-          padding: '1rem 1.25rem',
-          borderRadius: '1rem',
-          fontSize: '1rem',
-          fontWeight: 600,
-          background: '#1a1a1a',
-          border: '1px solid #333',
-          color: '#fff',
-          cursor: 'pointer',
-        }}
+        style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '1rem 1.25rem', borderRadius: '1rem', fontSize: '1rem', fontWeight: 600, background: '#1a1a1a', border: '1px solid #333', color: '#fff', cursor: 'pointer' }}
       >
         <span>¿Qué Incluye?</span>
-        <span
-          style={{
-            color: pack.glowColor,
-            fontSize: '12px',
-            display: 'inline-block',
-            transform: open ? 'rotate(180deg)' : 'rotate(0deg)',
-            transition: 'transform 0.2s',
-          }}
-        >▼</span>
+        <span style={{ color: pack.glowColor, fontSize: '12px', display: 'inline-block', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.35s cubic-bezier(0.4,0,0.2,1)' }}>▼</span>
       </button>
 
-      {open && (
-        <ul className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '-0.5rem' }}>
+      <div style={{ height: `${height}px`, overflow: 'hidden', transition: 'height 0.4s cubic-bezier(0.4,0,0.2,1)' }}>
+        <ul ref={contentRef} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', paddingBottom: '0.25rem' }}>
           {pack.includes.map((item, i) => (
             <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', fontSize: '0.875rem', color: '#ccc' }}>
               <span style={{ color: '#5FFA3B', marginTop: '2px', flexShrink: 0 }}>✓</span>
@@ -73,7 +60,7 @@ export default function PackCard({ pack }: { pack: Pack }) {
             </li>
           ))}
         </ul>
-      )}
+      </div>
 
       {/* Price */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
