@@ -19,7 +19,7 @@ function ReviewStrip({ items, direction }: { items: Review[]; direction: 1 | -1 
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    const speed = 0.2
+    const speed = 0.35
     const step = () => {
       if (!paused) {
         posRef.current += speed * direction
