@@ -26,8 +26,8 @@ export default function ProductCard({ product }: { product: Product }) {
             src={product.image}
             alt={product.name}
             fill
-            className="object-contain"
-            style={{ padding: '0.75rem' }}
+            className="object-cover"
+            style={{ padding: 0 }}
             sizes="(max-width: 768px) 50vw, 25vw"
           />
           {product.badge && (
