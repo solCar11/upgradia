@@ -18,6 +18,9 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
+ENV DIRECTUS_URL=https://admin.abeleo.com
+ENV DIRECTUS_TOKEN=NA_dWyy6endn466MK9nmTXHrgqgd0xTW
+ENV NEXT_PUBLIC_DIRECTUS_URL=https://admin.abeleo.com
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
@@ -26,9 +29,7 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-RUN echo 'const fs=require("fs");const pp=["/.env","/app/.env",__dirname+"/.env"];for(const p of pp){try{fs.readFileSync(p,"utf8").split("\\n").forEach(l=>{const t=l.trim();if(!t||t.startsWith("#"))return;const i=t.indexOf("=");if(i>0){process.env[t.slice(0,i).trim()]=t.slice(i+1).trim()}});console.log("[env] loaded "+p);break}catch{}}' > /app/load-env.js
-
 USER nextjs
 EXPOSE 3000
 
-CMD ["node", "-r", "./load-env.js", "server.js"]
+CMD ["node", "server.js"]
