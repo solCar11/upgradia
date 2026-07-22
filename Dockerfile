@@ -26,8 +26,9 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+RUN echo 'const fs=require("fs");const pp=["/.env","/app/.env",__dirname+"/.env"];for(const p of pp){try{fs.readFileSync(p,"utf8").split("\\n").forEach(l=>{const t=l.trim();if(!t||t.startsWith("#"))return;const i=t.indexOf("=");if(i>0){process.env[t.slice(0,i).trim()]=t.slice(i+1).trim()}});console.log("[env] loaded "+p);break}catch{}}' > /app/load-env.js
+
 USER nextjs
 EXPOSE 3000
 
-COPY --chown=nextjs:nodejs docker-entrypoint.js ./
-CMD ["node", "docker-entrypoint.js"]
+CMD ["node", "-r", "./load-env.js", "server.js"]
