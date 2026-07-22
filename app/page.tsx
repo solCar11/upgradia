@@ -1,3 +1,4 @@
+import { headers } from 'next/headers'
 import CategorySection from '@/components/product/CategorySection'
 import PacksSection from '@/components/home/PacksSection'
 import ComparisonTable from '@/components/home/ComparisonTable'
@@ -8,6 +9,7 @@ import { getProductos, getPacks, getResenas, getComparisonRows, getFaqItems } fr
 export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
+  await headers()
   const [allProducts, packs, reviews, comparisonRows, faqItems] = await Promise.all([
     getProductos(),
     getPacks(),
