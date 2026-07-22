@@ -3,9 +3,11 @@
 import { useEffect, useRef } from 'react'
 import WaveSection from '@/components/ui/WaveSection'
 import PackCard from './PackCard'
-import { packs } from '@/lib/data'
+import type { Pack } from '@/lib/data'
 
-export default function PacksSection() {
+type Props = { packs: Pack[] }
+
+export default function PacksSection({ packs }: Props) {
   const itemRefs = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {

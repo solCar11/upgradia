@@ -11,12 +11,17 @@ import ComparisonTable from '@/components/home/ComparisonTable'
 import FaqSection from '@/components/home/FaqSection'
 import ReviewsSection from '@/components/home/ReviewsSection'
 import { useCartStore } from '@/lib/cart-store'
-import type { Product, Pack } from '@/lib/data'
-import { reviews } from '@/lib/data'
+import type { Product, Pack, Review, FaqItem, ComparisonRow } from '@/lib/data'
 
-type Props = { product: Product | null; pack: Pack | null }
+type Props = {
+  product: Product | null
+  pack: Pack | null
+  reviews?: Review[]
+  comparisonRows?: ComparisonRow[]
+  faqItems?: FaqItem[]
+}
 
-export default function ProductClient({ product, pack }: Props) {
+export default function ProductClient({ product, pack, reviews = [], comparisonRows = [], faqItems = [] }: Props) {
   const router = useRouter()
   const addItem = useCartStore(s => s.addItem)
   const [qty, setQty] = useState(1)
@@ -169,9 +174,9 @@ export default function ProductClient({ product, pack }: Props) {
         </div>
       </div>
 
-      <ComparisonTable />
-      <FaqSection />
-      <ReviewsSection />
+      <ComparisonTable rows={comparisonRows} />
+      <FaqSection items={faqItems} />
+      <ReviewsSection reviews={reviews} />
 
       <StickyAddToCart
         productName={name}

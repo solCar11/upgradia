@@ -1,7 +1,10 @@
-import { products, packs } from '@/lib/data'
+import { getProducto, getPack, getProductos, getPacks, getResenas, getComparisonRows, getFaqItems } from '@/lib/api'
 import ProductClient from './ProductClient'
 
-export function generateStaticParams() {
+export const revalidate = 60
+
+export async function generateStaticParams() {
+  const [products, packs] = await Promise.all([getProductos(), getPacks()])
   return [
     ...products.map(p => ({ slug: p.slug })),
     ...packs.map(p => ({ slug: p.slug })),
@@ -10,8 +13,21 @@ export function generateStaticParams() {
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const product = products.find(p => p.slug === slug) ?? null
-  const pack = packs.find(p => p.slug === slug) ?? null
+  const [product, pack, reviews, comparisonRows, faqItems] = await Promise.all([
+    getProducto(slug),
+    getPack(slug),
+    getResenas(),
+    getComparisonRows(),
+    getFaqItems(),
+  ])
 
-  return <ProductClient product={product} pack={pack} />
+  return (
+    <ProductClient
+      product={product}
+      pack={pack}
+      reviews={reviews}
+      comparisonRows={comparisonRows}
+      faqItems={faqItems}
+    />
+  )
 }

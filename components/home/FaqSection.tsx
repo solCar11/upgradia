@@ -2,9 +2,11 @@
 
 import { useEffect, useRef } from 'react'
 import Accordion from '@/components/ui/Accordion'
-import { faqItems } from '@/lib/data'
+import type { FaqItem } from '@/lib/data'
 
-export default function FaqSection() {
+type Props = { items: FaqItem[] }
+
+export default function FaqSection({ items }: Props) {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -24,7 +26,7 @@ export default function FaqSection() {
         Preguntas Frecuentes
       </h2>
       <div ref={ref} className="scroll-reveal" style={{ maxWidth: '32rem', margin: '0 auto' }}>
-        <Accordion items={faqItems} />
+        <Accordion items={items} />
       </div>
     </section>
   )

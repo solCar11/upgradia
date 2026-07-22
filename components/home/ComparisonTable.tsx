@@ -3,9 +3,11 @@
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import WaveSection from '@/components/ui/WaveSection'
-import { comparisonRows } from '@/lib/data'
+import type { ComparisonRow } from '@/lib/data'
 
-export default function ComparisonTable() {
+type Props = { rows: ComparisonRow[] }
+
+export default function ComparisonTable({ rows }: Props) {
   const rowRefs = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
@@ -44,7 +46,7 @@ export default function ComparisonTable() {
 
           {/* Rows */}
           <div className="rounded-2xl overflow-hidden" style={{ border: '1.5px solid rgba(255,255,255,0.18)' }}>
-            {comparisonRows.map((row, i) => (
+            {rows.map((row, i) => (
               <div
                 key={i}
                 ref={el => { rowRefs.current[i] = el }}

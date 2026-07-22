@@ -5,10 +5,9 @@ import Link from 'next/link'
 import WaveSection from '@/components/ui/WaveSection'
 import ReviewCard from '@/components/ui/ReviewCard'
 import StarRating from '@/components/ui/StarRating'
-import { reviews } from '@/lib/data'
 import type { Review } from '@/lib/data'
 
-type Props = { productReviews?: typeof reviews }
+type Props = { reviews: Review[] }
 
 function ReviewStrip({ items, direction }: { items: Review[]; direction: 1 | -1 }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -59,13 +58,12 @@ function ReviewStrip({ items, direction }: { items: Review[]; direction: 1 | -1 
   )
 }
 
-export default function ReviewsSection({ productReviews }: Props) {
-  const all = productReviews ?? reviews
+export default function ReviewsSection({ reviews }: Props) {
+  const all = reviews
   const third = Math.ceil(all.length / 3)
   const row1 = all.slice(0, third)
   const row2 = all.slice(third, third * 2)
   const row3 = all.slice(third * 2)
-  // Pad short rows with duplicates so each strip loops properly
   const pad = (arr: Review[]) => arr.length < 3 ? [...arr, ...arr, ...arr] : arr
 
   return (
