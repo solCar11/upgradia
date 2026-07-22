@@ -5,7 +5,7 @@ import FaqSection from '@/components/home/FaqSection'
 import ReviewsSection from '@/components/home/ReviewsSection'
 import { getProductos, getPacks, getResenas, getComparisonRows, getFaqItems } from '@/lib/api'
 
-export const revalidate = 60
+export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
   const [allProducts, packs, reviews, comparisonRows, faqItems] = await Promise.all([

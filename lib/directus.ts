@@ -15,7 +15,7 @@ export async function directusFetch<T>(
       Authorization: `Bearer ${DIRECTUS_TOKEN}`,
       'Content-Type': 'application/json',
     },
-    next: { revalidate: 60 },
+    cache: 'no-store',
   })
 
   if (!res.ok) {

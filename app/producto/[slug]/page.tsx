@@ -1,7 +1,7 @@
 import { getProducto, getPack, getProductos, getPacks, getResenas, getComparisonRows, getFaqItems } from '@/lib/api'
 import ProductClient from './ProductClient'
 
-export const revalidate = 60
+export const dynamic = 'force-dynamic'
 
 export async function generateStaticParams() {
   const [products, packs] = await Promise.all([getProductos(), getPacks()])
